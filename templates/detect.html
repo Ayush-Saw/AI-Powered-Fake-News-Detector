@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% block title %}Detect News{% endblock %}{% block
+content %}
+<section class="heading">
+  <span class="eyebrow">01 / CLASSIFY</span>
+  <h1>Analyze a news story</h1>
+  <p>
+    English is expected by the model; Hindi may be translated if the optional
+    service is available.
+  </p>
+</section>
+<div class="columns">
+  <form class="panel" method="post">
+    <label>Headline <small>optional</small></label
+    ><input name="title" maxlength="300" placeholder="Enter headline" /><label
+      >Article text</label
+    ><textarea
+      name="article_text"
+      id="article_text"
+      rows="10"
+      maxlength="20000"
+      required
+      placeholder="Paste the article or claim..."></textarea>
+    <p class="note"><span id="char-count">0</span> / 20,000 characters</p>
+    <label>Publisher / source <small>optional</small></label
+    ><input name="source" maxlength="300" placeholder="Publisher name" /><button
+      class="btn primary full">
+      Run AI analysis →
+    </button>
+    <p class="note">
+      Text is stored in local history. Avoid private information.
+    </p>
+  </form>
+  <aside class="panel">
+    <h2>What you'll receive</h2>
+    <ul>
+      <li>Likely Fake / Likely Real output</li>
+      <li>Confidence when supported by the model</li>
+      <li>Feature explanation where possible</li>
+      <li>Language and translation status</li>
+      <li>PDF report and feedback option</li>
+    </ul>
+    <div class="callout">
+      The model detects learned text patterns. Verify important claims
+      independently.
+    </div>
+  </aside>
+</div>
+{% endblock %}

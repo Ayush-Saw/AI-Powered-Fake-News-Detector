@@ -1,0 +1,49 @@
+{% extends "base.html" %}{% block title %}Media Literacy{% endblock %}{% block
+content %}
+<section class="heading">
+  <span class="eyebrow">09 / LEARN</span>
+  <h1>Think before you share</h1>
+  <p>Habits for evaluating information carefully.</p>
+</section>
+<div class="cards">
+  <article class="card">
+    <b>01</b>
+    <h3>Check the source</h3>
+    <p>Find the original publisher, author, editorial policy, and evidence.</p>
+  </article>
+  <article class="card">
+    <b>02</b>
+    <h3>Read beyond the headline</h3>
+    <p>Headlines may omit qualifications or context.</p>
+  </article>
+  <article class="card">
+    <b>03</b>
+    <h3>Check date and context</h3>
+    <p>Old photos and reports can be reshared as current.</p>
+  </article>
+  <article class="card">
+    <b>04</b>
+    <h3>Seek independent sources</h3>
+    <p>
+      Look for reliable outlets and primary sources that corroborate the claim.
+    </p>
+  </article>
+</div>
+<div class="panel">
+  <span class="eyebrow">QUICK QUIZ</span>
+  <h2>What is the strongest verification habit?</h2>
+  <form id="quiz-form">
+    <label class="quiz-option"
+      ><input type="radio" name="answer" value="a" /> Trust a post if it has
+      many likes.</label
+    ><label class="quiz-option"
+      ><input type="radio" name="answer" value="b" /> Check original evidence
+      and independent reliable sources.</label
+    ><label class="quiz-option"
+      ><input type="radio" name="answer" value="c" /> Assume AI confidence
+      proves a claim.</label
+    ><button class="btn primary">Check answer</button>
+  </form>
+  <p id="quiz-feedback"></p>
+</div>
+{% endblock %}

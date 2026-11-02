@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% block title %}Similar News{% endblock %}{% block
+content %}
+<section class="heading">
+  <span class="eyebrow">07 / SIMILARITY SEARCH</span>
+  <h1>Find similar analyzed stories</h1>
+  <p>TF-IDF cosine similarity compares text against your saved history.</p>
+</section>
+<form class="panel" method="post">
+  <label>Headline or article text</label
+  ><textarea name="article_text" rows="7" required>{{ text }}</textarea
+  ><button class="btn primary">Find similar stories</button>
+</form>
+{% if results %}
+<h2>Closest matches</h2>
+{% for r in results %}
+<article class="panel">
+  <div class="stats">
+    <div><small>Similarity</small><b>{{ r.similarity }}%</b></div>
+    <div><small>Saved prediction</small><b>{{ r.prediction }}</b></div>
+  </div>
+  <h3>{{ r.title }}</h3>
+  <p class="note">{{ r.created_at }}</p>
+  <a href="{{ url_for('result',aid=r.id) }}">Open analysis →</a>
+</article>
+{% endfor %}{% elif text %}
+<div class="empty">No matching saved stories found.</div>
+{% endif %}
+<div class="callout">
+  Text similarity does not mean two stories have the same facts or truth value.
+</div>
+{% endblock %}

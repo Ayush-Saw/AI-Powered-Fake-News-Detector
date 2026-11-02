@@ -1,0 +1,38 @@
+{% extends 'base.html' %}{% block title %}Login · AI POWERED FAKE NEWS DETECTOR
+{% endblock %}{% block content %}
+<section class="heading">
+  <span class="eyebrow">WELCOME BACK</span>
+  <h1>Log in to AI POWERED FAKE NEWS
+DETECTOR</h1>
+  <p>
+    Sign in with your account. Administrators are sent to the admin dashboard
+    automatically.
+  </p>
+</section>
+<div class="panel" style="max-width:520px;margin:0 auto 35px">
+  <form method="post">
+    <label for="email">Email address</label
+    ><input
+      id="email"
+      type="email"
+      name="email"
+      required
+      autocomplete="username"
+      placeholder="you@example.com" /><label for="password">Password</label
+    ><input
+      id="password"
+      type="password"
+      name="password"
+      required
+      autocomplete="current-password"
+      placeholder="Your password" /><button
+      class="btn primary full"
+      type="submit">
+      Log in
+    </button>
+  </form>
+  <p class="note">
+    New here? <a href="{{ url_for('register') }}">Create a user account</a>.
+  </p>
+</div>
+{% endblock %}

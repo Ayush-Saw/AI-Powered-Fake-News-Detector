@@ -1,0 +1,73 @@
+{% extends "base.html" %}{% block title %}Analysis Result{% endblock %}{% block
+content %}
+<section class="heading">
+  <span class="eyebrow">ANALYSIS #{{ item.id }}</span>
+  <h1>Your analysis report</h1>
+</section>
+{% if warning %}
+<div class="flash error">{{ warning }}</div>
+{% endif %}
+<div class="columns">
+  <section class="panel">
+    <span class="eyebrow">MODEL OUTPUT</span>
+    <div class="prediction">{{ item.prediction }}</div>
+    <p class="note">
+      This is the classifier output—not a confirmed factual verdict.
+    </p>
+    <div class="stats">
+      <div>
+        <small>Confidence</small
+        ><b
+          >{% if item.confidence is not none %}{{ item.confidence }}%{% else
+          %}Unavailable{% endif %}</b
+        >
+      </div>
+      <div><small>Language</small><b>{{ item.language or "Unknown" }}</b></div>
+      <div>
+        <small>Translated</small><b>{{ "Yes" if item.translated else "No" }}</b>
+      </div>
+    </div>
+    <h3>{{ item.title }}</h3>
+    <p>{{ item.article_text[:1200] }}</p>
+    <a class="btn primary" href="{{ url_for('explanation',aid=item.id) }}"
+      >View explanation</a
+    >
+    <a class="btn secondary" href="{{ url_for('report',aid=item.id) }}"
+      >Download PDF</a
+    >
+  </section>
+  <aside class="panel">
+    <h2>Next steps</h2>
+    <p>
+      <a href="{{ url_for('verify',q=item.title) }}"
+        >⌕ Search related evidence</a
+      >
+    </p>
+    <p><a href="{{ url_for('duplicate') }}">⇄ Compare similar stories</a></p>
+    <p>
+      <a href="{{ url_for('source_analysis',source=item.source or '') }}"
+        >◉ Source history</a
+      >
+    </p>
+    <hr />
+    <h3>Submit feedback</h3>
+    <form method="post" action="{{ url_for('feedback',aid=item.id) }}">
+      <select name="feedback_type">
+        <option value="incorrect_prediction">
+          Prediction may be incorrect
+        </option>
+        <option value="supporting_evidence">Supporting evidence</option>
+        <option value="other">Other</option></select
+      ><textarea
+        name="details"
+        rows="3"
+        placeholder="Optional details/evidence link"></textarea
+      ><button class="btn secondary full">Save feedback</button>
+    </form>
+  </aside>
+</div>
+<div class="callout warning">
+  Do not share this result as proof that a person or publisher intentionally
+  spread false information.
+</div>
+{% endblock %}

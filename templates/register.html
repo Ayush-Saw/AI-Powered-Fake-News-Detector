@@ -1,0 +1,52 @@
+{% extends 'base.html' %}{% block title %}Create account · AI POWERED FAKE NEWS
+DETECTOR {% endblock %}{% block content %}
+<section class="heading">
+  <span class="eyebrow">JOIN AI POWERED FAKE NEWS
+DETECTOR </span>
+  <h1>Create your account</h1>
+  <p>Register as a user to keep track of your own news analyses.</p>
+</section>
+<div class="panel" style="max-width:520px;margin:0 auto 35px">
+  <form method="post">
+    <label for="name">Full name</label
+    ><input
+      id="name"
+      name="name"
+      required
+      maxlength="80"
+      autocomplete="name"
+      placeholder="Your name" /><label for="email">Email address</label
+    ><input
+      id="email"
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      placeholder="you@example.com" /><label for="password">Password</label
+    ><input
+      id="password"
+      type="password"
+      name="password"
+      required
+      minlength="8"
+      autocomplete="new-password"
+      placeholder="At least 8 characters" /><label for="confirm_password"
+      >Confirm password</label
+    ><input
+      id="confirm_password"
+      type="password"
+      name="confirm_password"
+      required
+      minlength="8"
+      autocomplete="new-password"
+      placeholder="Re-enter password" /><button
+      class="btn primary full"
+      type="submit">
+      Create account
+    </button>
+  </form>
+  <p class="note">
+    Already registered? <a href="{{ url_for('login') }}">Log in</a>.
+  </p>
+</div>
+{% endblock %}

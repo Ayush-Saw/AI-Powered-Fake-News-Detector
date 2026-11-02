@@ -1,0 +1,57 @@
+{% extends 'base.html' %}{% block title %}User Dashboard · AI POWERED FAKE NEWS
+DETECTOR {% endblock %}{% block content %}
+<section class="heading">
+  <span class="eyebrow">USER WORKSPACE</span>
+  <h1>Welcome, {{ current_user.name if current_user else 'User' }}</h1>
+  <p>
+    Your personal dashboard for checking news and reviewing your previous
+    analyses.
+  </p>
+  <a class="btn primary" href="{{ url_for('detect') }}">＋ Analyze news</a>
+</section>
+<div class="stats-grid">
+  <div class="stat-card"><span>Total analyses</span><b>{{ total }}</b></div>
+  <div class="stat-card"><span>Likely fake</span><b>{{ fake }}</b></div>
+  <div class="stat-card"><span>Likely real</span><b>{{ real }}</b></div>
+  <div class="stat-card"><span>Account role</span><b>User</b></div>
+</div>
+<div class="section-title">
+  <div>
+    <h2>Your recent analyses</h2>
+    <p>Only analyses created while you were logged in appear here.</p>
+  </div>
+</div>
+{% if rows %}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Headline</th>
+        <th>Prediction</th>
+        <th>Confidence</th>
+        <th>Date</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.title }}</td>
+        <td>{{ row.prediction }}</td>
+        <td>{{ '%.1f'|format(row.confidence or 0) }}%</td>
+        <td>{{ row.created_at }}</td>
+        <td><a href="{{ url_for('result',aid=row.id) }}">View</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="empty">
+  <h3>No analyses yet</h3>
+  <p>Start by submitting a headline or article for analysis.</p>
+  <a class="btn primary" href="{{ url_for('detect') }}"
+    >Analyze your first article</a
+  >
+</div>
+{% endif %} {% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}{% block title %}Analytics{% endblock %}{% block
+content %}
+<section class="heading">
+  <span class="eyebrow">05 / DASHBOARD</span>
+  <h1>Analysis analytics</h1>
+  <p>Counts summarize saved user analyses, not real-world news prevalence.</p>
+</section>
+<div class="stats-grid">
+  <div class="stat-card"><small>Saved analyses</small><b>{{ total }}</b></div>
+  <div class="stat-card">
+    <small>Likely Fake outputs</small><b>{{ fake }}</b>
+  </div>
+  <div class="stat-card">
+    <small>Likely Real outputs</small><b>{{ real }}</b>
+  </div>
+  <div class="stat-card">
+    <small>Model loaded</small><b>{{ "Yes" if model_ready else "No" }}</b>
+  </div>
+</div>
+<div class="panel">
+  <h2>Prediction distribution</h2>
+  {% if total %}<canvas
+    id="prediction-chart"
+    data-fake="{{ fake }}"
+    data-real="{{ real }}"></canvas
+  >{% else %}
+  <div class="empty">Run analyses to populate this chart.</div>
+  {% endif %}
+  <p class="note">
+    Classifier outputs are not a measure of actual misinformation prevalence.
+  </p>
+</div>
+{% if rows %}
+<div class="table-wrap">
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Output</th>
+      <th>Date</th>
+    </tr>
+    {% for r in rows %}
+    <tr>
+      <td><a href="{{ url_for('result',aid=r.id) }}">{{ r.title }}</a></td>
+      <td>{{ r.prediction }}</td>
+      <td>{{ r.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}{% endblock %}{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}

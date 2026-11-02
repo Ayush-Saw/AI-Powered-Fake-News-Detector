@@ -1,0 +1,56 @@
+{% extends "base.html" %}{% block title %}Model Performance{% endblock %}{%
+block content %}
+<section class="heading">
+  <span class="eyebrow">08 / EVALUATION</span>
+  <h1>Model performance</h1>
+  <p>Metrics come from the latest training run's held-out test set.</p>
+</section>
+{% if ready and info.get('accuracy') is not none %}
+<div class="stats-grid">
+  <div class="stat-card">
+    <small>Test accuracy</small
+    ><b>{{ "%.2f"|format(info.get('accuracy')*100) }}%</b>
+  </div>
+  <div class="stat-card">
+    <small>Macro precision</small
+    ><b>{{ "%.3f"|format(info.get('macro_precision',0)) }}</b>
+  </div>
+  <div class="stat-card">
+    <small>Macro recall</small
+    ><b>{{ "%.3f"|format(info.get('macro_recall',0)) }}</b>
+  </div>
+  <div class="stat-card">
+    <small>Macro F1-score</small
+    ><b>{{ "%.3f"|format(info.get('macro_f1',0)) }}</b>
+  </div>
+  <div class="stat-card">
+    <small>Test records</small><b>{{ info.get('test_records','—') }}</b>
+  </div>
+  <div class="stat-card">
+    <small>Evaluation split</small
+    ><b class="small">{{ info.get('split_method','—') }}</b>
+  </div>
+</div>
+<div class="panel">
+  <p><b>Model:</b> {{ info.get('model','—') }}</p>
+  <p>
+    <b>Cleaned dataset records:</b> {{
+    info.get('dataset_records_after_cleaning','—') }}
+  </p>
+  <p><b>Label counts:</b> {{ info.get('label_counts',{}) }}</p>
+  <p class="note">{{ info.get('note','') }}</p>
+</div>
+{% else %}
+<div class="empty">
+  <h3>Metrics not available yet</h3>
+  <p>
+    Place dataset at <code>backend/dataset/fake_news.csv</code> and run
+    <code>python -m backend.train_model</code>. Actual results will appear here.
+  </p>
+</div>
+{% endif %}
+<div class="callout warning">
+  Dataset leakage, source artifacts, and changes in real-world news can affect
+  performance. High test scores do not guarantee real-world reliability.
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}{% block title %}Admin Dashboard · AI POWERED FAKE NEWS DETECTOR {%
+endblock %}{% block content %}
+<section class="heading">
+  <span class="eyebrow">ADMINISTRATION</span>
+  <h1>Admin Dashboard</h1>
+  <p>
+    Platform overview for TruthLens AI. Review user accounts and recent
+    system-wide analyses.
+  </p>
+</section>
+<div class="stats-grid">
+  <div class="stat-card">
+    <span>Registered users</span><b>{{ stats.users }}</b>
+  </div>
+  <div class="stat-card">
+    <span>Total analyses</span><b>{{ stats.analyses }}</b>
+  </div>
+  <div class="stat-card"><span>Likely fake</span><b>{{ stats.fake }}</b></div>
+  <div class="stat-card">
+    <span>Feedback records</span><b>{{ stats.feedback }}</b>
+  </div>
+</div>
+<div class="section-title">
+  <div>
+    <h2>Registered users</h2>
+    <p>Account details and assigned roles.</p>
+  </div>
+</div>
+{% if users %}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Joined</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role|capitalize }}</td>
+        <td>{{ user.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="empty">No user accounts yet.</div>
+{% endif %}
+<div class="section-title">
+  <div>
+    <h2>Recent platform analyses</h2>
+    <p>
+      Latest 20 analysis records from all users and anonymous legacy records.
+    </p>
+  </div>
+  <a href="{{ url_for('analytics') }}">Open analytics →</a>
+</div>
+{% if rows %}
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Headline</th>
+        <th>Prediction</th>
+        <th>Confidence</th>
+        <th>Created</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.id }}</td>
+        <td>{{ row.title }}</td>
+        <td>{{ row.prediction }}</td>
+        <td>{{ '%.1f'|format(row.confidence or 0) }}%</td>
+        <td>{{ row.created_at }}</td>
+        <td><a href="{{ url_for('result',aid=row.id) }}">Open</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="empty">No analysis records yet.</div>
+{% endif %} {% endblock %}

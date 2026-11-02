@@ -1,0 +1,51 @@
+{% extends "base.html" %}{% block title %}History{% endblock %}{% block content
+%}
+<section class="heading">
+  <span class="eyebrow">06 / WORKSPACE</span>
+  <h1>Analysis history</h1>
+  <p>Records are stored in a local SQLite database.</p>
+</section>
+<input
+  id="history-filter"
+  class="filter"
+  placeholder="Filter by title or prediction..." />
+{% if rows %}
+<div class="table-wrap">
+  <table id="history-table">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Prediction</th>
+      <th>Confidence</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.id }}</td>
+      <td>{{ r.title }}</td>
+      <td>{{ r.prediction }}</td>
+      <td>
+        {% if r.confidence is not none %}{{ r.confidence }}%{% else %}—{% endif
+        %}
+      </td>
+      <td>{{ r.created_at }}</td>
+      <td>
+        <a href="{{ url_for('result',aid=r.id) }}">Open</a>
+        <form
+          class="inline"
+          method="post"
+          action="{{ url_for('history_delete',aid=r.id) }}"
+          onsubmit="return confirm('Delete this record?')">
+          <button class="link-button">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% else %}
+<div class="empty">
+  No history yet. <a href="{{ url_for('detect') }}">Analyze a story</a>.
+</div>
+{% endif %}{% endblock %}

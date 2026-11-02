@@ -1,0 +1,52 @@
+{% extends "base.html" %}{% block title %}Source Analysis{% endblock %}{% block
+content %}
+<section class="heading">
+  <span class="eyebrow">04 / SOURCE CONTEXT</span>
+  <h1>Publisher history</h1>
+  <p>
+    Review saved analyses associated with a user-entered source. This is not an
+    authoritative reputation score.
+  </p>
+</section>
+<form class="search">
+  <input
+    name="source"
+    value="{{ source }}"
+    placeholder="Publisher/source name" /><button class="btn primary">
+    Review history
+  </button>
+</form>
+{% if source %}
+<div class="stats-grid">
+  <div class="stat-card"><small>Matching records</small><b>{{ total }}</b></div>
+  <div class="stat-card">
+    <small>Likely Fake outputs</small><b>{{ fake }}</b>
+  </div>
+  <div class="stat-card">
+    <small>Likely Real outputs</small><b>{{ real }}</b>
+  </div>
+</div>
+<div class="callout">
+  These are unverified model outputs for saved records, not a publisher truth
+  score.
+</div>
+{% if matches %}
+<div class="table-wrap">
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Output</th>
+      <th>Date</th>
+    </tr>
+    {% for r in matches %}
+    <tr>
+      <td><a href="{{ url_for('result',aid=r.id) }}">{{ r.title }}</a></td>
+      <td>{{ r.prediction }}</td>
+      <td>{{ r.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% else %}
+<div class="empty">No saved analyses matched this source.</div>
+{% endif %}{% endif %}{% endblock %}

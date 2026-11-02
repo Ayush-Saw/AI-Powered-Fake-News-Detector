@@ -1,0 +1,42 @@
+{% extends "base.html" %}{% block title %}Evidence Search{% endblock %}{% block
+content %}
+<section class="heading">
+  <span class="eyebrow">03 / INVESTIGATE</span>
+  <h1>Search related evidence</h1>
+  <p>Results are leads to inspect, not automatic proof of a claim.</p>
+</section>
+<form class="search" method="get">
+  <input
+    name="q"
+    value="{{ query }}"
+    placeholder="Enter claim, event, or topic"
+    required /><button class="btn primary">Search</button>
+</form>
+{% if query %}{% if evidence %}
+<p class="note">
+  Retrieved {{ evidence|length }} reference results for “{{ query }}”.
+</p>
+{% for e in evidence %}
+<article class="panel">
+  <span class="eyebrow">REFERENCE RESULT</span>
+  <h3>{{ e.title }}</h3>
+  <p>{{ e.snippet }}</p>
+  <a target="_blank" rel="noopener noreferrer" href="{{ e.url }}"
+    >Open source ↗</a
+  >
+</article>
+{% endfor %}{% else %}
+<div class="empty">
+  No results retrieved. Check internet or try a shorter query.
+</div>
+{% endif %}{% else %}
+<div class="panel">
+  <h2>Verification checklist</h2>
+  <ol>
+    <li>Search the exact claim.</li>
+    <li>Look for primary sources and independent reporting.</li>
+    <li>Check dates and context.</li>
+    <li>Record what is supported, contradicted, or unknown.</li>
+  </ol>
+</div>
+{% endif %}{% endblock %}

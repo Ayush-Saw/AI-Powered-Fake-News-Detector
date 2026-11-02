@@ -1,0 +1,87 @@
+{% extends "base.html" %}{% block title %}Home | AI POWERED FAKE NEWS DETECTOR
+{% endblock %}{% block content %}
+<section class="hero">
+  <div>
+    <span class="eyebrow">AI-POWERED NEWS ANALYSIS</span>
+    <h1>Pause. Check.<br /><span>Understand the story.</span></h1>
+    <p class="lead">
+      Analyze news text, inspect model explanations, discover related sources,
+      and compare similar stories—all in one workspace.
+    </p>
+    <a class="btn primary" href="{{ url_for('detect') }}">Analyze a story →</a>
+    <a class="btn secondary" href="{{ url_for('verify') }}">Explore evidence</a>
+    <p class="note">
+      A model prediction is a signal to investigate, not proof that a claim is
+      true or false.
+    </p>
+  </div>
+  <div class="hero-card">
+    <small>✦ ANALYSIS WORKSPACE <b>LIVE</b></small>
+    <h2>One story. Multiple angles.</h2>
+    <div class="bar"></div>
+    <p>AI prediction <strong>Pattern-based</strong></p>
+    <p>Evidence <strong>Search separately</strong></p>
+    <p>Explanation <strong>Feature-based</strong></p>
+  </div>
+</section>
+<div class="section-title">
+  <div>
+    <span class="eyebrow">WORKSPACE</span>
+    <h2>More than a fake/real label</h2>
+  </div>
+  <p>Tools for investigating a story from multiple angles.</p>
+</div>
+<div class="cards">
+  <a class="card" href="{{ url_for('detect') }}"
+    ><b>✦</b>
+    <h3>AI Detection</h3>
+    <p>Get a classifier prediction with transparent limitations.</p></a
+  ><a class="card" href="{{ url_for('verify') }}"
+    ><b>⌕</b>
+    <h3>Evidence Search</h3>
+    <p>Find related reference pages for further investigation.</p></a
+  ><a class="card" href="{{ url_for('duplicate') }}"
+    ><b>⇄</b>
+    <h3>Similar News</h3>
+    <p>Compare text with previously analyzed stories.</p></a
+  ><a class="card" href="{{ url_for('analytics') }}"
+    ><b>▥</b>
+    <h3>Analytics</h3>
+    <p>Review saved analyses and actual model metrics.</p></a
+  >
+</div>
+<section class="panel">
+  <span class="eyebrow">MODEL STATUS</span>
+  <h2>Evaluation, measured honestly</h2>
+  <p>
+    Model loaded: <b>{{ "Ready" if model_ready else "Not trained" }}</b> ·
+    Recent saved analyses: <b>{{ recent|length }}</b> · Test accuracy:
+    <b
+      >{% if info.get('accuracy') is not none %}{{
+      "%.2f"|format(info.get('accuracy')*100) }}%{% else %}Not available{% endif
+      %}</b
+    >
+  </p>
+  <a href="{{ url_for('model_performance') }}">View model performance →</a>
+</section>
+<h2>Recent analyses</h2>
+{% if recent %}
+<div class="table-wrap">
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Prediction</th>
+      <th>Date</th>
+    </tr>
+    {% for r in recent %}
+    <tr>
+      <td><a href="{{ url_for('result',aid=r.id) }}">{{ r.title }}</a></td>
+      <td>{{ r.prediction }}</td>
+      <td>{{ r.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% else %}
+<div class="empty">No analyses yet. Submit your first article.</div>
+{% endif %}{% endblock %}

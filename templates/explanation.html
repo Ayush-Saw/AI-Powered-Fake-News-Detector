@@ -1,0 +1,34 @@
+{% extends "base.html" %}{% block title %}Explainable AI{% endblock %}{% block
+content %}
+<section class="heading">
+  <span class="eyebrow">02 / TRANSPARENCY</span>
+  <h1>Why did the model predict this?</h1>
+  <p>
+    Feature-level details show how a supported linear model used text patterns.
+  </p>
+</section>
+<div class="panel">
+  <div class="stats">
+    <div><small>Analysis</small><b>#{{ item.id }}</b></div>
+    <div><small>Prediction</small><b>{{ item.prediction }}</b></div>
+    <div>
+      <small>Confidence</small
+      ><b
+        >{% if item.confidence is not none %}{{ item.confidence }}%{% else
+        %}Unavailable{% endif %}</b
+      >
+    </div>
+  </div>
+  <h2>Feature explanation</h2>
+  <p>{{ item.explanation or "No explanation saved." }}</p>
+  <div class="callout">
+    Features explain model behavior, not whether the claim is true. Explanations
+    may be unavailable for some model types.
+  </div>
+  <h3>Submitted text</h3>
+  <blockquote>{{ item.article_text[:3000] }}</blockquote>
+  <a class="btn secondary" href="{{ url_for('result',aid=item.id) }}"
+    >← Back to result</a
+  >
+</div>
+{% endblock %}
