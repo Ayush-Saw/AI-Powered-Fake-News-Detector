@@ -39,3 +39,6 @@ The model detects patterns learned from its dataset; it does not independently e
 - Try `/verify?q=...` and `/duplicate`.
 - Download a result PDF.
 - Test empty text, long text, and Hindi text.
+
+
+“This repository includes a 5,000-row stratified sample of the dataset. For full results, train on the complete dataset.”
